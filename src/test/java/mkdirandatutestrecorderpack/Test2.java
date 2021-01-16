@@ -20,22 +20,19 @@ import com.relevantcodes.extentreports.LogStatus;
 import atu.testrecorder.ATUTestRecorder;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
-public class Test1 
+public class Test2 
 {
 	public static void main(String[] args) throws Exception
 	{
-		//Create a customized results folder
-		File fo=new File("1.5crore");
-		fo.mkdir();
-		//Create extent reports results file in our customized results folder
-		ExtentReports er=new ExtentReports(fo.getAbsolutePath()+"\\results.html",false); //false is for appending results
+		//Create extent reports results file in project folder
+		ExtentReports er=new ExtentReports("results.html",false); //false is for appending results
 		ExtentTest et=er.startTest("Website Title Test");
 		//Create Timestamp for dynamic video name
 		SimpleDateFormat sf=new SimpleDateFormat("dd-MMM-yyyy-hh-mm-ss");
 		Date dt=new Date();
 		String fname=sf.format(dt);
-		//Create Recording object with Path,video file name and audio(false/true)
-		ATUTestRecorder rec=new ATUTestRecorder(fo.getAbsolutePath(),"videoon "+fname,false); //false is for NO Audio
+		//Create Recording object with Path(if no path is given means project folder),video file name and audio(false/true)
+		ATUTestRecorder rec=new ATUTestRecorder("videoon "+fname,false); //false is for NO Audio
 		rec.start();
 		
 		//Project oriented code
@@ -66,9 +63,9 @@ public class Test1
 		{
 			//Screenshot
 			File src=driver.getScreenshotAs(OutputType.FILE);
-			File dest=new File(fo.getAbsolutePath()+"\\"+fname+".png");
+			File dest=new File(fname+".png");
 			FileHandler.copy(src, dest);
-			et.log(LogStatus.FAIL,"Title test failed",et.addScreenCapture(fo.getAbsolutePath()+"\\"+fname+".png"));
+			et.log(LogStatus.FAIL,"Title test failed",et.addScreenCapture(fname+".png"));
 		}
 		//Close site
 		driver.quit();
